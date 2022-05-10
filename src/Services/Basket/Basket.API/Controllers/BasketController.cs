@@ -7,8 +7,8 @@ using Microsoft.Extensions.Logging;
 
 namespace Basket.API.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/v1/[controller]")]
     public class BasketController : ControllerBase
     {
         private readonly IBasketRepository _repository;
