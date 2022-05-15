@@ -9,9 +9,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Contracts\Infrastructure\" />
     <Folder Include="Contracts\Persistence\" />
     <Folder Include="Features\" />
     <Folder Include="Behaviours\" />
+    <Folder Include="Models\" />
   </ItemGroup>
 
 </Project>
