@@ -27,7 +27,7 @@ namespace Ordering.Application.Features.Orders.Commands.DeleteOrder
             var orderToDelete = await _orderRepository.GetByIdAsync(request.Id);
             if (orderToDelete == null)
             {
-                throw new NotFoundException(nameof(Order), request.Id);
+                //throw new NotFoundException(nameof(Order), request.Id);
             }
 
             await _orderRepository.DeleteAsync(orderToDelete);

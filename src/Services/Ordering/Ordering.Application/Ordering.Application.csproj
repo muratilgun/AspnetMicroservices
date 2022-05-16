@@ -18,6 +18,7 @@
     <Folder Include="Features\Orders\Queries\GetOrdersList\" />
     <Folder Include="Models\" />
     <Folder Include="Mappings\" />
+    <Folder Include="Exceptions\" />
   </ItemGroup>
 
   <ItemGroup>
