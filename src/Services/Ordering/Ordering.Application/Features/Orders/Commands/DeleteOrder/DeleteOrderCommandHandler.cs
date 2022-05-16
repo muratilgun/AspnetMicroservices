@@ -6,6 +6,7 @@ using Ordering.Domain.Entities;
 using System.Threading.Tasks;
 using System.Threading;
 using System;
+using Ordering.Application.Exceptions;
 
 namespace Ordering.Application.Features.Orders.Commands.DeleteOrder
 {
@@ -27,7 +28,7 @@ namespace Ordering.Application.Features.Orders.Commands.DeleteOrder
             var orderToDelete = await _orderRepository.GetByIdAsync(request.Id);
             if (orderToDelete == null)
             {
-                //throw new NotFoundException(nameof(Order), request.Id);
+                throw new NotFoundException(nameof(Order), request.Id);
             }
 
             await _orderRepository.DeleteAsync(orderToDelete);
