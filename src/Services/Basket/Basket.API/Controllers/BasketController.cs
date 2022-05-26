@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
+using AutoMapper;
 using Basket.API.Entities;
 using Basket.API.GrpcServices;
 using Basket.API.Repositories;
@@ -15,12 +16,14 @@ namespace Basket.API.Controllers
         private readonly IBasketRepository _repository;
         private readonly DiscountGrpcService _discountGrpcService;
         private readonly ILogger<BasketController> _logger;
+        private readonly IMapper _mapper;
 
-        public BasketController(IBasketRepository repository, ILogger<BasketController> logger, DiscountGrpcService discountGrpcService)
+        public BasketController(IBasketRepository repository, ILogger<BasketController> logger, DiscountGrpcService discountGrpcService, IMapper mapper)
         {
             _repository = repository;
             _logger = logger;
             _discountGrpcService = discountGrpcService;
+            _mapper = mapper;
         }
 
         [HttpGet("{userName}", Name = "GetBasket")]
@@ -62,7 +65,21 @@ namespace Basket.API.Controllers
             // Create basketCheckoutEvent -- Set Totalprice on basketCheckout eventMessage
             // send checkout event to rabbitmq
             // remove the basket
-            return null;
+
+
+            // get existing basket with total price
+            var basket = await _repository.GetBasket(basketCheckout.UserName);
+            if (basket == null) return BadRequest();
+
+
+            // send checkout event to rabbitmq
+            var eventMessage = _mapper.Map<BasketCheckoutEvent>(basketCheckout);
+            // _eventBus.PublishBasketCheckout
+
+
+            // remove the basket
+            await _repository.DeleteBasket(basket.UserName);
+            return Accepted();
         }
     }
 }

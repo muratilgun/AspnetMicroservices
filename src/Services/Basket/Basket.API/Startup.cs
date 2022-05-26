@@ -33,7 +33,10 @@ namespace Basket.API
             {
                 options.Configuration = Configuration.GetValue<string>("CacheSettings:ConnectionStrings");
             });
+            
             services.AddScoped<IBasketRepository, BasketRepository>();
+            services.AddAutoMapper(typeof(Startup));
+
             services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(opt => opt.Address = new Uri(Configuration["GrpcSettings:DiscountUrl"]));
 
             services.AddScoped<DiscountGrpcService>();
