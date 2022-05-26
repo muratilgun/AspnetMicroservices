@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Ordering.Infrastructure;
+using MassTransit;
+using EventBus.Messages.Common;
 
 namespace Ordering.API
 {
@@ -29,6 +31,20 @@ namespace Ordering.API
         {
             services.ApplicationServices();
             services.AddInfrastructureServices(Configuration);
+
+            services.AddMassTransit(config => {
+                config.AddConsumer<BasketCheckoutConsumer>();
+                config.UsingRabbitMq((ctx, cfg) => {
+                    cfg.Host(Configuration["EventBusSettings:HostAddress"]);
+                    cfg.ReceiveEndpoint(EventBusConstants.BasketCheckoutQueue,c =>
+                    {
+                        c.ConfigureConsumer<BasketCheckoutConsumer>(ctx);
+                    });
+                });
+            });
+
+            services.AddMassTransitHostedService();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
