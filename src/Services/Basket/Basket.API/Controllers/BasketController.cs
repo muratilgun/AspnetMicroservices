@@ -52,5 +52,17 @@ namespace Basket.API.Controllers
             return Ok();
         }
 
+        [Route("[action]")]
+        [HttpPost]
+        [ProducesResponseType((int) HttpStatusCode.Accepted)]
+        [ProducesResponseType((int) HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> Checkout([FromBody] BasketCheckout basketCheckout)
+        {
+            // get existing basket with total price
+            // Create basketCheckoutEvent -- Set Totalprice on basketCheckout eventMessage
+            // send checkout event to rabbitmq
+            // remove the basket
+            return null;
+        }
     }
 }
