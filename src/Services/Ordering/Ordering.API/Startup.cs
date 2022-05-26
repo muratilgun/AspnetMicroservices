@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Ordering.Infrastructure;
 using MassTransit;
 using EventBus.Messages.Common;
+using Ordering.API.EventBusConsumer;
 
 namespace Ordering.API
 {
