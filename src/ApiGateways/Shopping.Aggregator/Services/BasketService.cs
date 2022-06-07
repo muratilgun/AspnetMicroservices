@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using System;
+using Shopping.Aggregator.Extensions;
 
 namespace Shopping.Aggregator.Services
 {
@@ -16,7 +17,8 @@ namespace Shopping.Aggregator.Services
 
         public async Task<BasketModel> GetBasket(string userName)
         {
-            throw new NotImplementedException();
+            var response = await _client.GetAsync($"/api/v1/Basket/{userName}");
+            return await response.ReadContentAs<BasketModel>();
         }
     }
 }
